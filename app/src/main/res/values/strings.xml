@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">to-do-app</string>
+    <string name="addButton">for add items</string>
+    <string name="editButton">for edit items</string>
+    <string name="project_clear_button">Project Clear Button</string>
+    <string name="project_page_title">プロジェクト一覧</string>
+    <string name="task_class_page_title">タスク区分一覧</string>
+    <string name="task_page_title">タスク一覧</string>
+</resources>
