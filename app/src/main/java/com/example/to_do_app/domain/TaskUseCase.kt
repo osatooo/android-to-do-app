@@ -5,13 +5,18 @@ import android.util.Log
 import com.example.to_do_app.domain.model.Task
 import com.example.to_do_app.infrastructure.TaskRepository
 
+/**
+ * タスクデータを利用するクラス
+ */
 class TaskUseCase(context: Context) {
     private val TAG = "TaskUseCase"
     private val taskRepository = TaskRepository(context)
 
     /**
      * 表示用データ取得メソッド
-     * @return task保存値のうち、対象のtaskClassに属するもの
+     * @param projectId タスクが属するプロジェクトのID
+     * @param taskClassId タスクが属するタスク区分のID
+     * @return タスク保存値のうち、対象のタスク区分に属するもの
      */
     fun getViewData(projectId: Int, taskClassId: Int): MutableList<Task> {
         val viewData = mutableListOf<Task>()
@@ -25,6 +30,7 @@ class TaskUseCase(context: Context) {
 
     /**
      *  チェックステータス更新用メソッド
+     *  @param task チェックステータスが更新されるタスク
      */
     fun updateCheckStatus(task: Task) {
         val taskList = taskRepository.getTaskList()
@@ -37,7 +43,8 @@ class TaskUseCase(context: Context) {
     }
 
     /**
-     * task追加メソッド
+     * タスク追加メソッド
+     * @param task 追加するタスク
      */
     fun addTask(task: Task) {
         val taskList = taskRepository.getTaskList()
@@ -47,7 +54,8 @@ class TaskUseCase(context: Context) {
     }
 
     /**
-     * task削除メソッド
+     * タスク削除メソッド
+     * @param task 削除するタスク
      */
     fun removeTask(task: Task) {
         val taskList = taskRepository.getTaskList()
@@ -58,6 +66,8 @@ class TaskUseCase(context: Context) {
 
     /**
      * コメント追加メソッド
+     * @param task コメント追加対象のタスク
+     * @param comment 追加するコメント
      */
     fun addComment(task: Task, comment: String) {
         val taskList = taskRepository.getTaskList()
@@ -71,8 +81,10 @@ class TaskUseCase(context: Context) {
     }
 
     /**
-     * task削除メソッド
-     * project, taskClass削除時に紐づくタスクを削除する場合に利用
+     * タスク削除メソッド
+     * （プロジェクト,タスク区分削除時に紐づくタスクを削除するために利用）
+     * @param projectId タスクが属するプロジェクトのID
+     * @param taskClassId タスクが属するタスク区分のID
      */
     fun removeTask(projectId: Int, taskClassId: Int?) {
         val taskList = taskRepository.getTaskList()
@@ -87,7 +99,9 @@ class TaskUseCase(context: Context) {
 
     /**
      * タスク区分ごとのチェックステータス確認メソッド
-     * @return 当該ステータスが全てtrueか否か
+     * @param projectId プロジェクトID
+     * @param taskClassId タスク区分ID
+     * @return タスク区分ごとのタスクのステータスが全てtrueか否か
      */
     fun isTaskClassStatus(projectId: Int, taskClassId: Int): Boolean {
         var result = false

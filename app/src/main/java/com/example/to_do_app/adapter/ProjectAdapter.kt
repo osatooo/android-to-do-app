@@ -16,6 +16,9 @@ import com.example.to_do_app.dialog.ClearDialog
 import com.example.to_do_app.domain.model.Project
 import com.example.to_do_app.domain.ProjectUseCase
 
+/**
+ * プロジェクト一覧画面を表示するためのアダプター
+ */
 class ProjectAdapter(private val context: Context): RecyclerView.Adapter<ProjectAdapter.ViewHolder>(){
     private val TAG = "ProjectAdapter"
     private val projectItems: MutableList<Project>
@@ -72,7 +75,10 @@ class ProjectAdapter(private val context: Context): RecyclerView.Adapter<Project
         }
         Log.d(TAG, "onBindViewHolder end")
     }
-
+    /**
+     * プロジェクト追加メソッド
+     * @param name プロジェクト名
+     */
     fun addProject(name: String){
         if (itemCount >= 20){
             Toast.makeText(context,
@@ -89,11 +95,18 @@ class ProjectAdapter(private val context: Context): RecyclerView.Adapter<Project
         notifyItemInserted(itemCount)
     }
 
+    /**
+     * プロジェクト削除画面のレイアウト切り替えメソッド
+     */
     fun editProject(){
         clearStatus = !clearStatus
         notifyItemRangeChanged(0, itemCount)
     }
 
+    /**
+     * プロジェクト削除メソッド
+     * @param position 削除したい要素のリスト位置
+     */
     fun removeProject(position: Int){
         //ファイル値更新
         projectUseCase.removeProject(projectItems[position])

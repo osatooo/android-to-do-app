@@ -10,9 +10,16 @@ import java.io.File
 import java.io.IOException
 import java.lang.reflect.Type
 
+/**
+ * タスクデータを管理するクラス
+ */
 class TaskRepository(private val context: Context) {
     private val TASK_FILE = "task.json"
 
+    /**
+     * タスクデータ取得メソッド
+     * @return ファイルに保存されているタスクのリスト
+     */
     fun getTaskList(): MutableList<Task> {
         val readFile = File(context.filesDir, TASK_FILE)
         if (readFile.exists()) {
@@ -29,6 +36,10 @@ class TaskRepository(private val context: Context) {
         return mutableListOf()
     }
 
+    /**
+     * タスクデータ更新メソッド
+     * @param taskList ファイルを上書きする値
+     */
     fun updateTask(taskList: List<Task>) {
         context.openFileOutput(TASK_FILE, Context.MODE_PRIVATE).use {
             val str = Gson().toJson(taskList)

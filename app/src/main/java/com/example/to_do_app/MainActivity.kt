@@ -9,6 +9,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // 起動時にfragmentを追加
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.container, MainFragment.newInstance(PageType.PROJECT))
         transaction.commit()

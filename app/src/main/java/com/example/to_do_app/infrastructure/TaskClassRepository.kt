@@ -10,9 +10,16 @@ import java.io.File
 import java.io.IOException
 import java.lang.reflect.Type
 
+/**
+ * タスク区分データを管理するクラス
+ */
 class TaskClassRepository(private val context: Context) {
     private val TASK_CLASS_FILE = "taskClass.json"
 
+    /**
+     * タスク区分データ取得メソッド
+     * @return ファイルに保存されているタスク区分のリスト
+     */
     fun getTaskClassList(): MutableList<TaskClass> {
         val readFile = File(context.filesDir, TASK_CLASS_FILE)
         if (readFile.exists()) {
@@ -31,9 +38,13 @@ class TaskClassRepository(private val context: Context) {
         return mutableListOf()
     }
 
-    fun updateTaskClass(list: List<TaskClass>) {
+    /**
+     * タスク区分データ更新メソッド
+     * @param taskClassList ファイルを上書きする値
+     */
+    fun updateTaskClass(taskClassList: List<TaskClass>) {
         context.openFileOutput(TASK_CLASS_FILE, Context.MODE_PRIVATE).use {
-            val str = Gson().toJson(list)
+            val str = Gson().toJson(taskClassList)
             it.write(str.toByteArray())
         }
     }

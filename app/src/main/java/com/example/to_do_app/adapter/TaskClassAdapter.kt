@@ -21,6 +21,9 @@ import com.example.to_do_app.dialog.ClearDialog
 import com.example.to_do_app.domain.TaskClassUseCase
 import com.example.to_do_app.domain.model.TaskClass
 
+/**
+ * タスク区分一覧画面を表示するためのアダプター
+ */
 class TaskClassAdapter(val context: Context, private val projectId: Int) :
     RecyclerView.Adapter<TaskClassAdapter.ViewHolder>() {
     private val TAG = "TaskClassAdapter"
@@ -70,14 +73,18 @@ class TaskClassAdapter(val context: Context, private val projectId: Int) :
         Log.d(TAG, "onBindViewHolder end")
     }
 
-    fun addTaskClass(label: String) {
+    /**
+     * タスク区分追加メソッド
+     * @param name タスク区分名
+     */
+    fun addTaskClass(name: String) {
         if (itemCount >= 20) {
             Toast.makeText(context,
                 "タスク区分件数が20件に達しているため追加できません。",
                 Toast.LENGTH_LONG).show()
             return
         }
-        val taskClass = TaskClass(label, projectId, taskClassUseCase.getTaskClassId(projectId))
+        val taskClass = TaskClass(name, projectId, taskClassUseCase.getTaskClassId(projectId))
         //ファイル保存値を更新
         taskClassUseCase.addTaskClass(taskClass)
         //表示用リスト更新
@@ -85,6 +92,10 @@ class TaskClassAdapter(val context: Context, private val projectId: Int) :
         notifyItemInserted(itemCount)
     }
 
+    /**
+     * タスク区分削除メソッド
+     * @param position 削除したい要素のリスト位置
+     */
     fun removeTaskClass(position: Int) {
         //ファイル値更新
         taskClassUseCase.removeTaskClass(taskClassItems[position])
@@ -93,6 +104,10 @@ class TaskClassAdapter(val context: Context, private val projectId: Int) :
         notifyItemRemoved(position)
     }
 
+    /**
+     * 削除確認ダイアログでの削除キャンセル時に動くメソッド
+     * @param position 削除予定だった要素のリスト位置
+     */
     fun removeCancel(position: Int?){
         position?.let{
             notifyItemChanged(it)
@@ -101,11 +116,15 @@ class TaskClassAdapter(val context: Context, private val projectId: Int) :
 
     override fun getItemCount(): Int = taskClassItems.size
 
+    /**
+     * タスク区分削除時のスワイプ処理
+     */
     fun getSwipeToDismissTouchHelper() =
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.ACTION_STATE_IDLE,
             ItemTouchHelper.LEFT
         ) {
+            // overrideが必要なため実装
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -114,6 +133,7 @@ class TaskClassAdapter(val context: Context, private val projectId: Int) :
                 return false
             }
 
+            // スワイプ時の処理
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 Log.d(TAG, "onSwiped")
                 // 確認ダイアログ表示
@@ -124,6 +144,7 @@ class TaskClassAdapter(val context: Context, private val projectId: Int) :
                 activity.let { dialog.show(it.supportFragmentManager, null) }
             }
 
+            //スワイプ時の背景を設定
             override fun onChildDraw(
                 c: Canvas,
                 recyclerView: RecyclerView,

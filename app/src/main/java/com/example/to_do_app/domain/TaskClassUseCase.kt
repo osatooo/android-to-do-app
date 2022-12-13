@@ -5,6 +5,9 @@ import android.util.Log
 import com.example.to_do_app.domain.model.TaskClass
 import com.example.to_do_app.infrastructure.TaskClassRepository
 
+/**
+ * タスク区分データを利用するクラス
+ */
 class TaskClassUseCase(context: Context) {
     private val TAG = "TaskClassUseCase"
     private val taskClassRepository = TaskClassRepository(context)
@@ -12,7 +15,8 @@ class TaskClassUseCase(context: Context) {
 
     /**
      * 表示用データ取得メソッド
-     * @return taskClass保存値のうち、対象のprojectに属するもの
+     * @param projectId タスク区分が属するプロジェクトのID
+     * @return タスク区分保存値のうち、対象のプロジェクトに属するもの
      */
     fun getViewData(projectId: Int): MutableList<TaskClass> {
         val viewData = mutableListOf<TaskClass>()
@@ -24,7 +28,8 @@ class TaskClassUseCase(context: Context) {
     }
 
     /**
-     * taskClass追加メソッド
+     * タスク区分追加メソッド
+     * @param taskClass 追加するタスク区分
      */
     fun addTaskClass(taskClass: TaskClass) {
         val taskClassList = taskClassRepository.getTaskClassList()
@@ -34,7 +39,8 @@ class TaskClassUseCase(context: Context) {
     }
 
     /**
-     * taskClass削除メソッド
+     * タスク区分以下削除メソッド
+     * @param taskClass 削除するタスク区分
      */
     fun removeTaskClass(taskClass: TaskClass) {
         //taskClassに紐づいたtaskを削除
@@ -47,8 +53,9 @@ class TaskClassUseCase(context: Context) {
     }
 
     /**
-     * taskClass削除メソッド
-     * project削除時に紐づくtaskClassを削除する場合に利用
+     * タスク区分以下削除メソッド
+     * （プロジェクト削除時に紐づくタスク区分とタスクを削除するために利用）
+     * @param projectId タスク区分、タスクが属するプロジェクトのID
      */
     fun removeTaskClass(projectId: Int) {
         //taskClassに紐づいたtaskを削除
@@ -61,16 +68,19 @@ class TaskClassUseCase(context: Context) {
     }
 
     /**
-     * taskClassStatus確認メソッド
-     * @return 対象のtaskClassに含まれるtaskのcheckStatusが全てtrueかどうか
+     * タスク区分ステータス確認メソッド
+     * @param projectId タスク区分が属するプロジェクトのID
+     * @param taskClassId タスク区分ID
+     * @return 対象のタスク区分に含まれるタスクのcheckStatusが全てtrueか否か
      */
     fun isTaskClassStatus(projectId: Int, taskClassId: Int): Boolean {
         return taskUseCase.isTaskClassStatus(projectId, taskClassId)
     }
 
     /**
-     * taskClassId設定メソッド
-     * @return 使用可能なtaskClassId (3桁まで)
+     * タスク区分ID設定メソッド
+     * @param projectId タスク区分が属するプロジェクトのID
+     * @return 使用可能なタスク区分ID (3桁まで)
      */
     fun getTaskClassId(projectId: Int): Int {
         var id = 0

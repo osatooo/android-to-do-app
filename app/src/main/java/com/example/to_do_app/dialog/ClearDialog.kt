@@ -9,6 +9,10 @@ import androidx.fragment.app.DialogFragment
 import com.example.to_do_app.adapter.ProjectAdapter
 import com.example.to_do_app.adapter.TaskClassAdapter
 
+/**
+ * 要素削除確認用ダイアログ
+ * プロジェクト、タスク区分削除時に削除確認を行う
+ */
 class ClearDialog() : DialogFragment() {
     private var projectAdapter: ProjectAdapter? = null
     private var taskClassAdapter: TaskClassAdapter? = null

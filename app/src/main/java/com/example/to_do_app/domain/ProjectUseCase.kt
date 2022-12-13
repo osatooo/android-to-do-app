@@ -5,6 +5,9 @@ import android.util.Log
 import com.example.to_do_app.domain.model.Project
 import com.example.to_do_app.infrastructure.ProjectRepository
 
+/**
+ * プロジェクトデータを利用するクラス
+ */
 class ProjectUseCase(context: Context) {
     private val TAG = "ProjectUseCase"
     private val projectRepository = ProjectRepository(context)
@@ -12,14 +15,15 @@ class ProjectUseCase(context: Context) {
 
     /**
      * 表示用データ取得メソッド
-     * @return project保存値
+     * @return プロジェクト保存値
      */
     fun getViewData(): MutableList<Project> {
         return projectRepository.getProjectList()
     }
 
     /**
-     * project追加メソッド
+     * プロジェクト追加メソッド
+     * @param project 追加するプロジェクト
      */
     fun addProject(project: Project){
         val projectList = projectRepository.getProjectList()
@@ -29,7 +33,8 @@ class ProjectUseCase(context: Context) {
     }
 
     /**
-     * projectClass削除メソッド
+     * プロジェクト削除メソッド
+     * @param project 削除するプロジェクト
      */
     fun removeProject(project: Project){
         //projectに紐づいたtaskClass以下を削除
@@ -42,7 +47,7 @@ class ProjectUseCase(context: Context) {
     }
 
     /**
-     * projectId設定メソッド
+     * プロジェクトID設定メソッド
      * @return 使用可能なprojectId (2桁まで)
      */
     fun getProjectId(): Int {

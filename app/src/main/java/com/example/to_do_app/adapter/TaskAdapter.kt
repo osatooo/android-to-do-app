@@ -21,6 +21,9 @@ import com.example.to_do_app.dialog.CommentDialog
 import com.example.to_do_app.domain.TaskUseCase
 import com.example.to_do_app.domain.model.Task
 
+/**
+ * タスク一覧を表示するためのアダプター
+ */
 class TaskAdapter(
     private val context: Context,
     private val projectId: Int,
@@ -87,14 +90,18 @@ class TaskAdapter(
         Log.d(TAG, "onBindViewHolder end")
     }
 
-    fun addTask(label: String) {
+    /**
+     * タスク追加メソッド
+     * @param name タスク名
+     */
+    fun addTask(name: String) {
         if (itemCount >= 50) {
             Toast.makeText(context,
                 "タスク件数が50件に達しているため追加できません。",
                 Toast.LENGTH_LONG).show()
             return
         }
-        val task = Task(label, projectId, taskClassId)
+        val task = Task(name, projectId, taskClassId)
         //ファイル保存値更新
         taskUseCase.addTask(task)
         //表示用リスト更新
@@ -102,6 +109,11 @@ class TaskAdapter(
         notifyItemInserted(itemCount)
     }
 
+    /**
+     * タスクコメント追加メソッド
+     * @param comment 追加するコメント
+     * @param position コメントを追加するタスクのリスト位置
+     */
     fun addComment(comment: String, position: Int) {
         val task = taskItems[position]
         //ファイル保存値更新
@@ -114,11 +126,15 @@ class TaskAdapter(
 
     override fun getItemCount(): Int = taskItems.size
 
+    /**
+     * タスク削除時のスワイプ処理
+     */
     fun getSwipeToDismissTouchHelper(adapter: TaskAdapter) =
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.ACTION_STATE_IDLE,
             ItemTouchHelper.LEFT
         ) {
+            // overrideが必要なため実装
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -127,6 +143,7 @@ class TaskAdapter(
                 return false
             }
 
+            // スワイプ時の処理
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 Log.d(TAG, "onSwiped")
                 //ファイル保存値更新
@@ -137,7 +154,7 @@ class TaskAdapter(
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
 
-            //スワイプした時の背景を設定
+            //スワイプ時の背景を設定
             override fun onChildDraw(
                 c: Canvas,
                 recyclerView: RecyclerView,

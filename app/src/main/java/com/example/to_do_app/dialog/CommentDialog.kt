@@ -10,6 +10,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import com.example.to_do_app.adapter.TaskAdapter
 
+/**
+ * コメント追加用ダイアログ
+ * タスクに追加するコメントの入力、編集を行う
+ * @param taskAdapter タスク一覧画面のアダプター
+ * @param position コメントを追加するタスクのリスト位置
+ * @param comment 過去に入力したコメント
+ */
 class CommentDialog(
     private val taskAdapter: TaskAdapter,
     private val position: Int,

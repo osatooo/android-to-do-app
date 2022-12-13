@@ -11,6 +11,13 @@ import androidx.fragment.app.DialogFragment
 import com.example.to_do_app.MainFragment
 import com.example.to_do_app.PageType
 
+/**
+ * 要素追加用ダイアログ
+ * 要素名の設定を行う
+ * @param mainFragment
+ * @param clickView 追加ボタンタップ時の階層
+ * @param pageName 上位階層の要素名
+ */
 class AddDialog(
     private val mainFragment: MainFragment,
     private val clickView: View,
